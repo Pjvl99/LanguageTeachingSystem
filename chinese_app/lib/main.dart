@@ -48,8 +48,44 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Center(
-      child: Text("App"),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Chinese app"),
+        backgroundColor: Colors.red,
+      ),
+      body: Center(
+        child: AspectRatio(
+          aspectRatio: 1.0, // Ensures the board is square
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 8,
+            ),
+            itemBuilder: (context, index) {
+              final int row = index ~/ 8;
+              final int column = index % 8;
+              final bool isBlack = (row + column) % 2 == 1;
+              return Container(
+                decoration: BoxDecoration(
+                  color: isBlack ? Colors.black : Colors.white,
+                ),
+              );
+            },
+            itemCount: 64,
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Category'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        currentIndex: 0,
+        fixedColor: Colors.deepPurple,
+      ),
     );
   }
 }
